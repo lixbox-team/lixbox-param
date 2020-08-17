@@ -1,0 +1,46 @@
+{
+	"param": {
+		"application": {
+			"copyright": "Copyright 2018 - {0} créé par Lixbox team",
+			"menu": {
+				"registry": "Gestionnaire de paramètres",
+				"settings": "Configuration"
+			},
+			"title": "Lixbox param"
+		},
+		"service": {
+			"action": {
+				"add": {
+					"text": "Ajouter un parametre"
+				},
+				"search": {
+					"placeholder": "Chercher une entrée"
+				}
+			},
+			"dialog": {
+				"entry": {
+					"delete": {
+						"text": "Êtes vous vraiment sur?",
+						"title": "Suppression du parametre {0}"
+					}
+				}
+			},
+			"entry": {
+				"code": "Code",
+				"libelle": "Libellé",
+				"service": "Code du Service",
+				"type": "Type de la valeur",
+				"value": "Valeur"
+			},
+			"select": "Choisissez un paramètre",
+			"ui": {
+				"button": {
+					"entry": {
+						"del": "Supprimer ce paramètre",
+						"save": "Enregistrer ce paramètre"
+					}
+				}
+			}
+		}
+	}
+}
