@@ -35,7 +35,7 @@ project(":lixbox-param-core"){
         compile group: 'org.hibernate.validator', name: 'hibernate-validator', version: version_hibernate_validator
         
         //TEST
-        testCompile group:'io.quarkus', name: 'quarkus-junit5'
+        testCompile group:'io.quarkus', name: 'quarkus-junit5', version: quarkusVersion
         testCompile group:'io.rest-assured', name: 'rest-assured', version: '3.3.0'
         testCompile group: 'io.quarkus', name: 'quarkus-rest-client', version: quarkusVersion
     }
