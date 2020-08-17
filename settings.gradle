@@ -12,5 +12,6 @@ rootProject.name = 'lixbox-param'
 
 /** Projet importé */
 include 'lixbox-param-api'
+include 'lixbox-param-client'
 include 'lixbox-param-core'
 include 'lixbox-param-ui'

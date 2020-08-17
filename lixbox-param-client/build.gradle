@@ -1,0 +1,48 @@
+project(":lixbox-param-client"){
+    group = "${config.desc_project.artefact_support.group}"
+    dependencies {
+        //Projects
+        compile (project(':lixbox-param-api'))
+        
+       
+        //lixbox
+        compile(group: 'fr.lixbox.lixbox-service', name: 'lixbox-microservice-common', version: version_lixbox_service){ 
+            exclude(group:'fr.lixbox')
+        }
+        compile(group: 'fr.lixbox.lixbox-service', name: 'lixbox-microservice-client', version: version_lixbox_service){ 
+            exclude(group:'fr.lixbox')
+        }
+         
+        //jarkarta
+        compileOnly (group: 'jakarta.platform', name: 'jakarta.jakartaee-api', version: '8.0.0')
+  
+        //divers
+        compileOnly group: 'jakarta.ws.rs', name: 'jakarta.ws.rs-api', version: '2.1.5'
+	}
+    
+    eclipse{
+        wtp{
+            facet {
+                facet name: "jst.cdi", version: "2.0"
+            }   
+        }
+    }
+
+    sonarqube {
+		properties {
+           property "sonar.projectKey", "${config.desc_project.artefact_support.projectKey}:${project.name}"
+           property "sonar.projectName", "${project.name}"
+		   property "sonar.sources","src/main"
+		   property "sonar.tests","src/test"
+        }
+	}
+    
+    jar{
+        manifest {
+            attributes(
+                "Implementation-Title": project.name, 
+                "Implementation-Version": version, 
+                "Implementation-Timestamp": new Date())
+        }
+    }
+}
