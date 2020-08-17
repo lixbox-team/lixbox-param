@@ -102,7 +102,7 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
             Response response = service
                     .path("/params")
                     .request().get();
-            result = (List<Parametre>) parseResponse(response,  new GenericType<List<Parametre>>(){});
+            result = parseResponse(response,  new GenericType<List<Parametre>>(){});
         }
         else
         {
@@ -129,7 +129,7 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
                     .path("/param")
                     .path(id)
                     .request().get();
-            result = (Parametre) parseResponse(response,  new GenericType<Parametre>(){});
+            result = parseResponse(response,  new GenericType<Parametre>(){});
         }
         else
         {
@@ -155,7 +155,7 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
             Response response = service
                     .path("/param/sync")
                     .request().post(Entity.json(param.toString()));
-            result = (Parametre) parseResponse(response,  new GenericType<Parametre>(){});
+            result = parseResponse(response,  new GenericType<Parametre>(){});
         }
         else
         {
@@ -182,7 +182,7 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
                     .path("/param")
                     .path(id)
                     .request().delete();
-            result = (Boolean) parseResponse(response,  new GenericType<Boolean>(){});
+            result = parseResponse(response,  new GenericType<Boolean>(){});
         }
         else
         {
@@ -209,7 +209,7 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
                     .path(serviceId)
                     .path("params")
                     .request().get();
-            result = (List<Parametre>) parseResponse(response,  new GenericType<List<Parametre>>(){});
+            result = parseResponse(response,  new GenericType<List<Parametre>>(){});
         }
         else
         {
@@ -241,7 +241,7 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
                     .path("/param")
                     .path(code)
                     .request().get();
-            result = (Parametre) parseResponse(response,  new GenericType<Parametre>(){});
+            result = parseResponse(response,  new GenericType<Parametre>(){});
         }
         else
         {

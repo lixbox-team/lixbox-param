@@ -102,44 +102,18 @@ public class ParametreServiceBean implements ParametreService
         
                 
         //controle de redis
-        String redisUri = "";
         try
         {
-            ServiceEntry redis = registryService.discoverService(Constant.REDIS_NAME, Constant.REDIS_VERSION);
-            if (redis!=null)
-            {
-                redisUri = redis.getPrimary().getUri();
-            }
-            if (!StringUtil.isEmpty(redisUri))
-            {
-                String hostName = redisUri.substring(6,redisUri.lastIndexOf(':'));
-                String port = redisUri.substring(redisUri.lastIndexOf(':')+1);
-                try (
-                    Jedis redisClient = new Jedis(hostName, Integer.parseInt(port));
-                )
-                {           
-                    redisClient.ping();
-                    state.setStatus(ServiceStatus.UP);
-                    LOG.debug(SERVICE_REDIS_TEXT+redisUri+" EST DISPONIBLE");
-                }
-                catch (Exception e)
-                {
-                    LOG.fatal(e,e);
-                    LOG.error(SERVICE_REDIS_TEXT+redisUri+" N'EST PAS DISPONIBLE");
-                    state.setStatus(ServiceStatus.DOWN);
-                    state.getChecks().add(new Check(ServiceStatus.DOWN, SERVICE_REDIS_TEXT+redisUri+" N'EST PAS DISPONIBLE"));
-                }
-            }
-            else
-            {
-                state.setStatus(ServiceStatus.DOWN);
-                state.getChecks().add(new Check(ServiceStatus.DOWN, "IMPOSSIBLE DE TROUVER LE SERVICE REDIS"));
-            }
+            redisClient.getRedisClient().ping();
+            state.setStatus(ServiceStatus.UP);
+            LOG.debug(SERVICE_REDIS_TEXT+" EST DISPONIBLE");
         }
         catch (Exception e)
         {
-            LOG.fatal(e.getMessage());
-            state.getChecks().add(new Check(ServiceStatus.DOWN, SERVICE_REDIS_TEXT+redisUri+" N'EST PAS DISPONIBLE"));
+            LOG.fatal(e,e);
+            LOG.error(SERVICE_REDIS_TEXT+" N'EST PAS DISPONIBLE");
+            state.setStatus(ServiceStatus.DOWN);
+            state.getChecks().add(new Check(ServiceStatus.DOWN, SERVICE_REDIS_TEXT+" N'EST PAS DISPONIBLE"));
         }
         return state;
     }
@@ -329,7 +303,7 @@ public class ParametreServiceBean implements ParametreService
         }
         catch(Exception e)
         {
-            ExceptionUtil.traiterException(e, ParametreService.SERVICE_CODE, (StringUtil.isNotEmpty(defaultValue)&&StringUtil.isNotEmpty(defaultValueClass))?false:true);
+            ExceptionUtil.traiterException(e, ParametreService.SERVICE_CODE, (StringUtil.isNotEmpty(defaultValue)&&StringUtil.isNotEmpty(defaultValueClass)));
         }
         if (value==null)
         {
@@ -349,6 +323,7 @@ public class ParametreServiceBean implements ParametreService
             final Class<?> typed = Class.forName(classz);
             TypeReference<?> typeRef= new TypeReference<Object>()
             {
+                @Override
                 public Type getType() {
                     return typed;
                 }

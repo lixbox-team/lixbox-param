@@ -138,7 +138,7 @@ public class Parametre extends AbstractValidatedEntity implements Dao, RedisSear
     
     public static Parametre valueOf(String json)
     {
-        return (Parametre) JsonUtil.transformJsonToObject(json, new TypeReference<Parametre>() {});
+        return JsonUtil.transformJsonToObject(json, new TypeReference<Parametre>() {});
     }
 
     
