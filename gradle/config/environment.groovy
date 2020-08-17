@@ -10,16 +10,16 @@ desc_project{
         minorVersion=0
     }
     artefact{
-        group="fr.lixbox.lixbox-cache"
-        project="lixbox-cache"
+        group="fr.lixbox.lixbox-param"
+        project="lixbox-param"
         projectKey="${group}:${project}"
         dockerImageKey="lixboxteam"
     }
 	uri{
-	   api_context="/cache/api"
-	   api="/cache/api/1.0"
-	   ui_context="/cache/ui"
-	   ui="/cache/ui" 
+	   api_context="/parametre/api"
+	   api="/parametre/api/1.0"
+	   ui_context="/parametre/ui"
+	   ui="/parametre/ui" 
 	}
 
 	pic{

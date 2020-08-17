@@ -2,13 +2,10 @@ project(":lixbox-param-client"){
     group = "${config.desc_project.artefact_support.group}"
     dependencies {
         //Projects
-        compile (project(':lixbox-param-api'))
+        compile project(":lixbox-param-api")
         
        
         //lixbox
-        compile(group: 'fr.lixbox.lixbox-service', name: 'lixbox-microservice-common', version: version_lixbox_service){ 
-            exclude(group:'fr.lixbox')
-        }
         compile(group: 'fr.lixbox.lixbox-service', name: 'lixbox-microservice-client', version: version_lixbox_service){ 
             exclude(group:'fr.lixbox')
         }
