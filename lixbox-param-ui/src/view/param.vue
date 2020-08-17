@@ -121,11 +121,11 @@ export default {
         .then(response => response.data)
         .then(data => {
           this.parametreServiceUri = data.paramApi;
+          this.getParametres();
         });
     },
     initialize() {
       this.getConfiguration();
-      this.getParametres();
     },
     getParametres() {
       this.getParametreService()

@@ -49,7 +49,7 @@ public class CdiProducer
     private static final String DEFAULT_REGISTRY_URL = "http://localhost:18100/registry/api/1.0";    
 
     @ConfigProperty(name="registry.uri", defaultValue=DEFAULT_REGISTRY_URL) String registryUri;
-    
+    @ConfigProperty(name="redis.uri") String redisUri;
         
 
     // ----------- Methode -----------
@@ -78,11 +78,13 @@ public class CdiProducer
         ExtendRedisClient result = null;
         try
         {
-            String redisUri = "";
-            ServiceEntry redis = getRegistryServiceClient().discoverService(Constant.REDIS_NAME, Constant.REDIS_VERSION);
-            if (redis!=null)
+            if (StringUtil.isEmpty(redisUri)) 
             {
-                redisUri = redis.getPrimary().getUri();
+                ServiceEntry redis = getRegistryServiceClient().discoverService(Constant.REDIS_NAME, Constant.REDIS_VERSION);
+                if (redis!=null)
+                {
+                    redisUri = redis.getPrimary().getUri();
+                }
             }
             if (!StringUtil.isEmpty(redisUri))
             {
