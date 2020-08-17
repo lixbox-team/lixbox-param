@@ -47,17 +47,14 @@ import fr.lixbox.common.util.StringUtil;
 import fr.lixbox.io.json.JsonUtil;
 import fr.lixbox.orm.redis.SearchQueryHelper;
 import fr.lixbox.orm.redis.client.ExtendRedisClient;
-import fr.lixbox.service.param.Constant;
 import fr.lixbox.service.param.ParametreService;
 import fr.lixbox.service.param.model.Parametre;
 import fr.lixbox.service.registry.RegistryService;
 import fr.lixbox.service.registry.cdi.LocalRegistryConfig;
-import fr.lixbox.service.registry.model.ServiceEntry;
 import fr.lixbox.service.registry.model.health.Check;
 import fr.lixbox.service.registry.model.health.ServiceState;
 import fr.lixbox.service.registry.model.health.ServiceStatus;
 import io.redisearch.Query;
-import redis.clients.jedis.Jedis;
 
 /**
  * Ce service de parametres fonctionne sur Redis.
