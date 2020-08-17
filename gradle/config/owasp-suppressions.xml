@@ -365,5 +365,17 @@
    ]]></notes>
    <packageUrl regex="true">^pkg:npm/serialize\-javascript@.*$</packageUrl>
    <vulnerabilityName>1548</vulnerabilityName>
+</suppress><suppress>
+   <notes><![CDATA[
+   file name: semver:"7.3.2"
+   ]]></notes>
+   <packageUrl regex="true">^pkg:npm/semver@.*$</packageUrl>
+   <vulnerabilityName>CVE-2015-8855</vulnerabilityName>
+</suppress><suppress>
+   <notes><![CDATA[
+   file name: serialize-javascript:"2.1.2"
+   ]]></notes>
+   <packageUrl regex="true">^pkg:npm/serialize\-javascript@.*$</packageUrl>
+   <vulnerabilityName>CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')</vulnerabilityName>
 </suppress>
 </suppressions>
