@@ -23,17 +23,29 @@
  ******************************************************************************/
 package fr.lixbox.service.param;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+
 import fr.lixbox.common.exceptions.BusinessException;
 import fr.lixbox.common.resource.LixboxResources;
+import fr.lixbox.common.util.ExceptionUtil;
 import fr.lixbox.common.util.StringUtil;
 import fr.lixbox.service.common.client.MicroServiceClient;
+import fr.lixbox.service.common.util.ServiceUtil;
 import fr.lixbox.service.param.model.Parametre;
 
 /**
@@ -46,6 +58,7 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
 {
     // ----------- Attribut(s) -----------
     private static final long serialVersionUID = -7504335790007649401L;
+    private static final Log LOG = LogFactory.getLog(ParametreServiceClient.class);
     private static final String MSG_ERROR_EXCEPUTI_02_KEY = "MSG.ERROR.EXCEPUTI_02";
     private static final String MSG_ERROR_EXCEPUTI_09_KEY = "MSG.ERROR.EXCEPUTI_09";
     
@@ -252,7 +265,6 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
     
     
     
-    @SuppressWarnings("unchecked")
     @Override
     public <T> T getValueByCode(String serviceId, String code, String defaultValue, String defaultValueClass)
         throws BusinessException
@@ -278,18 +290,59 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
         WebTarget service = getService();
         if(service!=null)
         {   
-            Response response = service
-                    .path(serviceId)
-                    .path("/param")
-                    .path(code)
-                    .queryParam("default", defaultValue)
-                    .queryParam("defaultClass",defaultValueClass)
-                    .request().get();
-            result = (T) parseResponse(response,  new GenericType<Object>(){});
+            Response response=null;
+            try
+            {
+                response = service
+                        .path(serviceId)
+                        .path("value")
+                        .path(code)
+                        .queryParam("default", URLEncoder.encode(defaultValue, StandardCharsets.UTF_8.toString()))
+                        .queryParam("defaultClass",defaultValueClass)
+                        .request().get();
+            }
+            catch (UnsupportedEncodingException e)
+            {
+                ExceptionUtil.traiterException(e, ParametreService.SERVICE_CODE, true);
+            }
+            
+            result = parseResponse(response,  new TypeReference<T>()
+            {
+                @Override
+                public Type getType() {
+                    try
+                    {
+                        return Class.forName(defaultValueClass);
+                    }
+                    catch (ClassNotFoundException e)
+                    {
+                        LOG.fatal(e);
+                    }
+                    return null;
+                }
+            });
         }
         else
         {
             throw new BusinessException(LixboxResources.getString(MSG_ERROR_EXCEPUTI_09_KEY, new String[]{ParametreService.SERVICE_CODE, ParametreService.SERVICE_NAME}));
+        }
+        return result;
+    }
+    
+
+    
+    protected <T> T parseResponse(Response response, TypeReference<T> type) throws BusinessException
+    {
+        T result;
+        try
+        {
+            result = ServiceUtil.parseResponse(response, type);
+        }
+        catch(ProcessingException pe)
+        {
+            currentSecureService = null;
+            currentService = null;
+            throw pe;
         }
         return result;
     }

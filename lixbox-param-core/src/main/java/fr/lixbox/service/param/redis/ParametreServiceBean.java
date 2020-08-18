@@ -317,15 +317,22 @@ public class ParametreServiceBean implements ParametreService
         T value=null;
         try
         {
-            final Class<?> typed = Class.forName(classz);
-            TypeReference<?> typeRef= new TypeReference<Object>()
+            if (classz.contains("String"))
             {
-                @Override
-                public Type getType() {
-                    return typed;
-                }
-            };
-            value = (T) JsonUtil.transformJsonToObject(json, typeRef);
+                value=(T) json;
+            }
+            else
+            {
+                final Class<?> typed = Class.forName(classz);
+                TypeReference<?> typeRef= new TypeReference<Object>()
+                {
+                    @Override
+                    public Type getType() {
+                        return typed;
+                    }
+                };
+                value = (T) JsonUtil.transformJsonToObject(json, typeRef);
+            }
         }
         catch(Exception e)
         {
