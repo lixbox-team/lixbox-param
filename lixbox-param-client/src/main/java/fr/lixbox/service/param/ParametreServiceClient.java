@@ -29,7 +29,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -45,7 +44,6 @@ import fr.lixbox.common.resource.LixboxResources;
 import fr.lixbox.common.util.ExceptionUtil;
 import fr.lixbox.common.util.StringUtil;
 import fr.lixbox.service.common.client.MicroServiceClient;
-import fr.lixbox.service.common.util.ServiceUtil;
 import fr.lixbox.service.param.model.Parametre;
 
 /**
@@ -325,24 +323,6 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
         else
         {
             throw new BusinessException(LixboxResources.getString(MSG_ERROR_EXCEPUTI_09_KEY, new String[]{ParametreService.SERVICE_CODE, ParametreService.SERVICE_NAME}));
-        }
-        return result;
-    }
-    
-
-    
-    protected <T> T parseResponse(Response response, TypeReference<T> type) throws BusinessException
-    {
-        T result;
-        try
-        {
-            result = ServiceUtil.parseResponse(response, type);
-        }
-        catch(ProcessingException pe)
-        {
-            currentSecureService = null;
-            currentService = null;
-            throw pe;
         }
         return result;
     }
