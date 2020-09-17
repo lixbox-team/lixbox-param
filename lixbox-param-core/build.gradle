@@ -84,6 +84,30 @@ project(":lixbox-param-core"){
       environment "PARAM_REDIS_URI", "tcp://main.host:6380"
     }
 
+    println(version)
+    def quarkusRunner = file("$buildDir/libs/${project.name}-${version}.rjar")
+    def quarkusRunnerArtifact = artifacts.add('archives', quarkusRunner) {
+        type 'rjar'
+        builtBy 'quarkusBuild'
+    }
+    
+    task copyArtefact(type: Copy) {
+        from "$buildDir/${project.name}-${version}-runner.jar"
+        into "$buildDir/libs"
+        rename { String fileName -> "${project.name}-${version}.rjar"}
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                artifact quarkusRunnerArtifact
+            }
+        }
+    }
+    tasks.quarkusBuild.finalizedBy(copyArtefact);
+    tasks.jar.finalizedBy(quarkusBuild);
+
+
     
     //creation de l'image docker
     task pullOpenjdk11Image(type: DockerPullImage, description: "Pull openjdk11 image"){
