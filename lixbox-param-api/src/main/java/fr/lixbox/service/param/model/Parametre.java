@@ -178,4 +178,15 @@ public class Parametre extends AbstractValidatedEntity implements Dao, RedisSear
         indexFields.put("service", serviceId);
         return indexFields;
     }
+
+    
+
+    @Transient
+    @JsonIgnore
+    @XmlTransient
+    @Override
+    public long getTTL()
+    {
+        return 0;
+    }
 }
