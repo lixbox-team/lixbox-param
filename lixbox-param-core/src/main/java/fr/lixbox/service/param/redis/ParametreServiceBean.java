@@ -300,7 +300,7 @@ public class ParametreServiceBean implements ParametreService
         }
         catch(Exception e)
         {
-            ExceptionUtil.traiterException(e, ParametreService.SERVICE_CODE, (StringUtil.isNotEmpty(defaultValue)&&StringUtil.isNotEmpty(defaultValueClass)));
+            ExceptionUtil.traiterException(e, ParametreService.SERVICE_CODE, !(StringUtil.isNotEmpty(defaultValue)&&StringUtil.isNotEmpty(defaultValueClass)));
         }
         if (value==null)
         {
