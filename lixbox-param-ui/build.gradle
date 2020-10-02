@@ -152,4 +152,5 @@ project(':lixbox-param-ui'){
     }
     pushProjectImages.dependsOn buildProjectImages
     buildAndPushDockerImages.dependsOn pushProjectImages
+    tasks.clean.dependsOn tasks.npmInstall
 }

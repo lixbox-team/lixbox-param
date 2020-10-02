@@ -45,8 +45,8 @@ import fr.lixbox.common.util.CodeVersionUtil;
 import fr.lixbox.common.util.ExceptionUtil;
 import fr.lixbox.common.util.StringUtil;
 import fr.lixbox.io.json.JsonUtil;
-import fr.lixbox.orm.redis.SearchQueryHelper;
 import fr.lixbox.orm.redis.client.ExtendRedisClient;
+import fr.lixbox.orm.redis.query.RedisSearchQueryHelper;
 import fr.lixbox.service.param.ParametreService;
 import fr.lixbox.service.param.model.Parametre;
 import fr.lixbox.service.registry.RegistryService;
@@ -231,7 +231,7 @@ public class ParametreServiceBean implements ParametreService
         List<Parametre> params=new ArrayList<>();
         try
         {
-            Query query = new Query(SearchQueryHelper.toStringAttribute("service",serviceId));
+            Query query = new Query(RedisSearchQueryHelper.toStringAttribute("service",serviceId));
             query.limit(0, 500);
             query.setSortBy("code", true);
             params.addAll(redisClient.findByExpression(Parametre.class, query));
@@ -266,8 +266,8 @@ public class ParametreServiceBean implements ParametreService
         try
         {
             List<Parametre> parametres = new ArrayList<>();
-            Query query = new Query(SearchQueryHelper.toStringAttribute("code",code)+" "+
-                                    SearchQueryHelper.toStringAttribute("service",serviceId));
+            Query query = new Query(RedisSearchQueryHelper.toStringAttribute("code",code)+" "+
+                    RedisSearchQueryHelper.toStringAttribute("service",serviceId));
             query.limit(0, 500);
             query.setSortBy("code", true);
             parametres.addAll(redisClient.findByExpression(Parametre.class, query));
