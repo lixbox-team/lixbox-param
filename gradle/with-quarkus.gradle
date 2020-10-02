@@ -8,8 +8,15 @@ subprojects {
     }
     gradle.taskGraph.whenReady { graph ->
         if (graph.hasTask(check)) {
-            quarkusGenerateCode.enabled = false
-            quarkusGenerateCodeTests.enabled = false
+            if (project.tasks.findByName("quarkusGenerateCode")!=null)
+            {
+                project.tasks.findByName("quarkusGenerateCode").enabled = false
+            }
+            if (project.tasks.findByName("quarkusGenerateCodeTests")!=null)
+            {
+                project.tasks.findByName("quarkusGenerateCodeTests").enabled = false
+            }
+            
         }
     }
 }
