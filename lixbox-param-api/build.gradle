@@ -14,9 +14,6 @@ project(":lixbox-param-api"){
         //quarkus
         compile group: 'io.quarkus', name: 'quarkus-resteasy', version:quarkusVersion
 
-        //divers
-        compileOnly group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '2.2.3'
-        
         //TEST
 //        sans objet
     }
