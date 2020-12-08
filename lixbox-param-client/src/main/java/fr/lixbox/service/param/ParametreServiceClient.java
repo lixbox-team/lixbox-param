@@ -43,6 +43,7 @@ import fr.lixbox.common.exceptions.BusinessException;
 import fr.lixbox.common.resource.LixboxResources;
 import fr.lixbox.common.util.ExceptionUtil;
 import fr.lixbox.common.util.StringUtil;
+import fr.lixbox.io.json.JsonUtil;
 import fr.lixbox.service.common.client.MicroServiceClient;
 import fr.lixbox.service.param.model.Parametre;
 
@@ -263,6 +264,7 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
     
     
     
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getValueByCode(String serviceId, String code, String defaultValue, String defaultValueClass)
         throws BusinessException
@@ -322,7 +324,29 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
         }
         else
         {
-            throw new BusinessException(LixboxResources.getString(MSG_ERROR_EXCEPUTI_09_KEY, new String[]{ParametreService.SERVICE_CODE, ParametreService.SERVICE_NAME}));
+            try
+            {
+                result = ((T) JsonUtil.transformJsonToObject(defaultValue, new TypeReference<Object>(){
+                    @Override
+                    public Type getType()
+                    {
+                        Type classz = String.class;
+                        try
+                        {
+                            classz = Class.forName(defaultValueClass);
+                        }
+                        catch (ClassNotFoundException e)
+                        {
+                            LOG.error(e,e);
+                        }
+                        return classz;
+                    }
+                }));
+            }
+            catch(Exception e)
+            {
+                throw new BusinessException(LixboxResources.getString(MSG_ERROR_EXCEPUTI_09_KEY, new String[]{ParametreService.SERVICE_CODE, ParametreService.SERVICE_NAME}));
+            }
         }
         return result;
     }
