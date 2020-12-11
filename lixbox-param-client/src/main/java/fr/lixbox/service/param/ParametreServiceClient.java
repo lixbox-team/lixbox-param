@@ -78,24 +78,16 @@ public class ParametreServiceClient extends MicroServiceClient implements Parame
         serviceName = ParametreService.SERVICE_NAME;
         serviceVersion = ParametreService.SERVICE_VERSION;
     } 
-    
-    
-    
     @Override
     protected void syncCache()
     {
         //sans objet pas de cache pour ce service
     }
-        
-    
     @Override
     protected void initStore()
     {
         //sans objet pas de cache pour ce service
     }
-    
-    
-    
     @Override
     protected void loadCache()
     {
