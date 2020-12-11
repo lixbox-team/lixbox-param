@@ -383,5 +383,11 @@
    ]]></notes>
    <packageUrl regex="true">^pkg:npm/websocket\-extensions@.*$</packageUrl>
    <vulnerabilityName>CVE-2020-7663</vulnerabilityName>
+</suppress><suppress>
+   <notes><![CDATA[
+   file name: axios:0.19.2
+   ]]></notes>
+   <packageUrl regex="true">^pkg:npm/axios@.*$</packageUrl>
+   <vulnerabilityName>CVE-2020-28168</vulnerabilityName>
 </suppress>
 </suppressions>
