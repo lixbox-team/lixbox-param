@@ -101,7 +101,7 @@ public class ParametreServiceBean implements ParametreService
         //controle de redis
         try
         {
-            redisClient.getRedisClient().ping();
+            redisClient.getPoolResource().ping();
             state.setStatus(ServiceStatus.UP);
             LOG.debug(SERVICE_REDIS_TEXT+" EST DISPONIBLE");
         }

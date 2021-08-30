@@ -65,7 +65,7 @@ public class ParametreServiceRegister
         {
             InetAddress inetAddress = InetAddress.getLocalHost();
             endpointURI = "http://" + inetAddress.getHostAddress()+ ":" + hostPort + ParametreService.FULL_SERVICE_URI;
-            boolean result = registryClient.registerService(ParametreService.SERVICE_NAME, ParametreService.SERVICE_VERSION, ServiceType.MICRO_PROFILE, endpointURI);
+            boolean result = registryClient.registerService(ParametreService.SERVICE_NAME, ParametreService.SERVICE_VERSION, ServiceType.MICRO_PROFILE, endpointURI, "");
             LOG.info("SERVICE ParametreService REGISTRATION IS "+result+" ON "+registryClient.getCurrentRegistryServiceUri());
         }
         catch(NullPointerException e)
