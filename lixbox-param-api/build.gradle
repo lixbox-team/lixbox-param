@@ -11,9 +11,9 @@ project(":lixbox-param-api"){
         compile(group: 'fr.lixbox.lixbox-orm', name: 'lixbox-redis', version: version_lixbox_orm)
         compile(group: 'fr.lixbox.lixbox-service', name: 'lixbox-microservice-common', version: version_lixbox_service) 
         
-        //quarkus
-        compile group: 'io.quarkus', name: 'quarkus-resteasy', version:quarkusVersion
-
+        //jakarta
+        implementation group: 'jakarta.ws.rs', name: 'jakarta.ws.rs-api', version: '2.1.6'
+        
         //TEST
 //        sans objet
     }
