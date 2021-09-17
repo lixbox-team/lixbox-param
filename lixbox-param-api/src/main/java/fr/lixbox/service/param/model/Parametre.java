@@ -37,6 +37,7 @@ import fr.lixbox.io.json.JsonUtil;
 import fr.lixbox.orm.entity.model.AbstractValidatedEntity;
 import fr.lixbox.orm.entity.model.Dao;
 import fr.lixbox.orm.redis.model.RedisSearchDao;
+import fr.lixbox.orm.redis.query.RedisSearchValueSanitizer;
 import fr.lixbox.service.param.Constant;
 import io.redisearch.Schema;
 
@@ -174,8 +175,8 @@ public class Parametre extends AbstractValidatedEntity implements Dao, RedisSear
     public Map<String, Object> getIndexFieldValues()
     {
         Map<String, Object> indexFields = new HashMap<>();
-        indexFields.put("code", code);
-        indexFields.put("service", serviceId);
+        indexFields.put("code", RedisSearchValueSanitizer.sanitizeValue(code));
+        indexFields.put("service", RedisSearchValueSanitizer.sanitizeValue(serviceId));
         return indexFields;
     }
 
