@@ -799,5 +799,11 @@
    ]]></notes>
    <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
    <vulnerabilityName>CVE-2021-25122</vulnerabilityName>
+</suppress><suppress>
+   <notes><![CDATA[
+   file name: tomcat-embed-core-8.5.46.jar
+   ]]></notes>
+   <packageUrl regex="true">^pkg:maven/org\.apache\.tomcat\.embed/tomcat\-embed\-core@.*$</packageUrl>
+   <vulnerabilityName>CVE-2021-41079</vulnerabilityName>
 </suppress>
 </suppressions>
