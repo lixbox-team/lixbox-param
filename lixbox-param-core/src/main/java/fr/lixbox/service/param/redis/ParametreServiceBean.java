@@ -55,6 +55,7 @@ import fr.lixbox.service.registry.model.health.Check;
 import fr.lixbox.service.registry.model.health.ServiceState;
 import fr.lixbox.service.registry.model.health.ServiceStatus;
 import io.redisearch.Query;
+import redis.clients.jedis.Jedis;
 
 /**
  * Ce service de parametres fonctionne sur Redis.
@@ -99,9 +100,9 @@ public class ParametreServiceBean implements ParametreService
         
                 
         //controle de redis
-        try
+        try(Jedis client = redisClient.getPoolResource())
         {
-            redisClient.getPoolResource().ping();
+            client.ping();
             state.setStatus(ServiceStatus.UP);
             LOG.debug(SERVICE_REDIS_TEXT+" EST DISPONIBLE");
         }

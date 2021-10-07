@@ -100,7 +100,7 @@ public class CdiProducer
                 poolConfig.setMinIdle(1);
                 poolConfig.setTestWhileIdle(true);
                 poolConfig.setNumTestsPerEvictionRun(10);
-                poolConfig.setTimeBetweenEvictionRunsMillis(30000L);
+                poolConfig.setTimeBetweenEvictionRunsMillis(3000L);
                 poolConfig.setBlockWhenExhausted(false);
                 poolConfig.setTestWhileIdle(true);
                 JedisPool pool = new JedisPool(poolConfig, hostName, port);
