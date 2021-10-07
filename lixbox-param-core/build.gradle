@@ -20,7 +20,6 @@ project(":lixbox-param-core"){
         //quarkus
         implementation group: 'io.quarkus', name: 'quarkus-resteasy', version:quarkusVersion
         implementation group: 'io.quarkus', name: 'quarkus-resteasy-jackson', version:quarkusVersion
-        implementation group: 'io.quarkus', name: 'quarkus-rest-client', version:quarkusVersion
         implementation group: 'io.quarkus', name: 'quarkus-smallrye-openapi', version:quarkusVersion
         implementation group: 'io.quarkus', name: 'quarkus-logging-gelf', version:quarkusVersion
         implementation group: 'io.quarkus', name: 'quarkus-smallrye-opentracing', version: quarkusVersion

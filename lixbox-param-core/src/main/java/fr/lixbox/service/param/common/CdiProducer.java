@@ -35,6 +35,8 @@ import fr.lixbox.service.param.Constant;
 import fr.lixbox.service.registry.cdi.LocalRegistryConfig;
 import fr.lixbox.service.registry.client.RegistryServiceClient;
 import fr.lixbox.service.registry.model.ServiceEntry;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Cette classe produit les objets CDI nécessaire au service
@@ -89,8 +91,20 @@ public class CdiProducer
             if (!StringUtil.isEmpty(redisUri))
             {
                 String hostName = redisUri.substring(6,redisUri.lastIndexOf(':'));
-                String port = redisUri.substring(redisUri.lastIndexOf(':')+1);
-                result = new ExtendRedisClient(hostName, Integer.parseInt(port));
+                int port = Integer.parseInt(redisUri.substring(redisUri.lastIndexOf(':')+1));
+                JedisPoolConfig poolConfig = new JedisPoolConfig();
+                poolConfig.setMaxTotal(40);
+                poolConfig.setTestOnBorrow(true);
+                poolConfig.setTestOnReturn(true);
+                poolConfig.setMaxIdle(40);
+                poolConfig.setMinIdle(1);
+                poolConfig.setTestWhileIdle(true);
+                poolConfig.setNumTestsPerEvictionRun(10);
+                poolConfig.setTimeBetweenEvictionRunsMillis(30000L);
+                poolConfig.setBlockWhenExhausted(false);
+                poolConfig.setTestWhileIdle(true);
+                JedisPool pool = new JedisPool(poolConfig, hostName, port);
+                result = new ExtendRedisClient(pool);
             }
         }
         catch (Exception e)
