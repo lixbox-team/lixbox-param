@@ -35,8 +35,6 @@ import fr.lixbox.service.param.Constant;
 import fr.lixbox.service.registry.cdi.LocalRegistryConfig;
 import fr.lixbox.service.registry.client.RegistryServiceClient;
 import fr.lixbox.service.registry.model.ServiceEntry;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Cette classe produit les objets CDI nécessaire au service
@@ -51,9 +49,9 @@ public class CdiProducer
     private static final String DEFAULT_REGISTRY_URL = "http://localhost:18100/registry/api/1.0";    
 
     @ConfigProperty(name="registry.uri", defaultValue=DEFAULT_REGISTRY_URL) String registryUri;
-    @ConfigProperty(name="redis.uri", defaultValue="") String redisUri;
-        
 
+
+    
     // ----------- Methode -----------
     @Produces @LocalRegistryConfig
     public RegistryServiceClient getRegistryServiceClient() 
@@ -80,7 +78,8 @@ public class CdiProducer
         ExtendRedisClient result = null;
         try
         {
-            if (StringUtil.isEmpty(redisUri)||"not_use".equals(redisUri)) 
+            String redisUri = System.getProperty("param.redis.uri");
+            if (StringUtil.isEmpty(redisUri)) 
             {
                 ServiceEntry redis = getRegistryServiceClient().discoverService(Constant.REDIS_NAME, Constant.REDIS_VERSION);
                 if (redis!=null)
@@ -90,21 +89,7 @@ public class CdiProducer
             }
             if (!StringUtil.isEmpty(redisUri))
             {
-                String hostName = redisUri.substring(6,redisUri.lastIndexOf(':'));
-                int port = Integer.parseInt(redisUri.substring(redisUri.lastIndexOf(':')+1));
-                JedisPoolConfig poolConfig = new JedisPoolConfig();
-                poolConfig.setMaxTotal(40);
-                poolConfig.setTestOnBorrow(true);
-                poolConfig.setTestOnReturn(true);
-                poolConfig.setMaxIdle(40);
-                poolConfig.setMinIdle(1);
-                poolConfig.setTestWhileIdle(true);
-                poolConfig.setNumTestsPerEvictionRun(10);
-                poolConfig.setTimeBetweenEvictionRunsMillis(3000L);
-                poolConfig.setBlockWhenExhausted(false);
-                poolConfig.setTestWhileIdle(true);
-                JedisPool pool = new JedisPool(poolConfig, hostName, port);
-                result = new ExtendRedisClient(pool);
+                result = new ExtendRedisClient(ExtendRedisClient.getConfigForPool(40), redisUri);
             }
         }
         catch (Exception e)

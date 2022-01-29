@@ -21,7 +21,7 @@
  *   @AUTHOR Lixbox-team
  *
  ******************************************************************************/
-package fr.lixbox.service.param;
+package fr.lixbox.service.param.ui;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +42,7 @@ public class ConfigurationServlet extends HttpServlet
     private static final long serialVersionUID = 3009650591589313586L;
     
     
-    @ConfigProperty(name="param.api.url")
+    @ConfigProperty(name="param.api.uri")
     String paramApi;
 
     

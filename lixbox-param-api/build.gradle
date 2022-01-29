@@ -7,9 +7,9 @@ project(":lixbox-param-api"){
 //        sans objet
         
         //lixbox
-        compile(group: 'fr.lixbox.lixbox-orm', name: 'lixbox-entity', version: version_lixbox_orm)
-        compile(group: 'fr.lixbox.lixbox-orm', name: 'lixbox-redis', version: version_lixbox_orm)
-        compile(group: 'fr.lixbox.lixbox-service', name: 'lixbox-microservice-common', version: version_lixbox_service) 
+        api(group: 'fr.lixbox.lixbox-orm', name: 'lixbox-entity', version: version_lixbox_orm)
+        api(group: 'fr.lixbox.lixbox-orm', name: 'lixbox-redis', version: version_lixbox_orm)
+        api(group: 'fr.lixbox.lixbox-service', name: 'lixbox-microservice-common', version: version_lixbox_service) 
         
         //jakarta
         implementation group: 'jakarta.ws.rs', name: 'jakarta.ws.rs-api', version: '2.1.6'

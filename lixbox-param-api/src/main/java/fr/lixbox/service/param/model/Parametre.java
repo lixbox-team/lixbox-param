@@ -39,7 +39,7 @@ import fr.lixbox.orm.entity.model.Dao;
 import fr.lixbox.orm.redis.model.RedisSearchDao;
 import fr.lixbox.orm.redis.query.RedisSearchValueSanitizer;
 import fr.lixbox.service.param.Constant;
-import io.redisearch.Schema;
+import redis.clients.jedis.search.Schema;
 
 /**
  * Cette entite correspond aux informations d'un paramètre
@@ -48,7 +48,7 @@ import io.redisearch.Schema;
  * @author ludovic.terral
  */
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Parametre extends AbstractValidatedEntity implements Dao, RedisSearchDao
+public class Parametre extends AbstractValidatedEntity implements RedisSearchDao, Dao
 {
     // ----------- Attribut -----------    
 	private static final long serialVersionUID = 202006131456L;
@@ -172,9 +172,9 @@ public class Parametre extends AbstractValidatedEntity implements Dao, RedisSear
     @JsonIgnore
     @XmlTransient
     @Override
-    public Map<String, Object> getIndexFieldValues()
+    public Map<String, String> getIndexFieldValues()
     {
-        Map<String, Object> indexFields = new HashMap<>();
+        Map<String, String> indexFields = new HashMap<>();
         indexFields.put("code", RedisSearchValueSanitizer.sanitizeValue(code));
         indexFields.put("service", RedisSearchValueSanitizer.sanitizeValue(serviceId));
         return indexFields;

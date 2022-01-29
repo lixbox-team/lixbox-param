@@ -120,7 +120,10 @@ export default {
         .get(process.env.VUE_APP_CONFIGURATION_URI)
         .then(response => response.data)
         .then(data => {
-          this.parametreServiceUri = data.paramApi;
+          this.parametreServiceUri = data.param.api.uri;
+          this.getParametres();
+        })
+        .catch(error =>{
           this.getParametres();
         });
     },

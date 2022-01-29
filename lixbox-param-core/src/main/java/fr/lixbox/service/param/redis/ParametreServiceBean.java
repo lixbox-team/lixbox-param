@@ -46,6 +46,7 @@ import fr.lixbox.common.util.ExceptionUtil;
 import fr.lixbox.common.util.StringUtil;
 import fr.lixbox.io.json.JsonUtil;
 import fr.lixbox.orm.redis.client.ExtendRedisClient;
+import fr.lixbox.orm.redis.model.EQuery;
 import fr.lixbox.orm.redis.query.RedisSearchQueryHelper;
 import fr.lixbox.service.param.ParametreService;
 import fr.lixbox.service.param.model.Parametre;
@@ -54,8 +55,6 @@ import fr.lixbox.service.registry.cdi.LocalRegistryConfig;
 import fr.lixbox.service.registry.model.health.Check;
 import fr.lixbox.service.registry.model.health.ServiceState;
 import fr.lixbox.service.registry.model.health.ServiceStatus;
-import io.redisearch.Query;
-import redis.clients.jedis.Jedis;
 
 /**
  * Ce service de parametres fonctionne sur Redis.
@@ -97,12 +96,11 @@ public class ParametreServiceBean implements ParametreService
     {
         LOG.debug("Check Health started");
         ServiceState state = new ServiceState();
-        
                 
         //controle de redis
-        try(Jedis client = redisClient.getPoolResource())
+        try
         {
-            client.ping();
+            redisClient.ping();
             state.setStatus(ServiceStatus.UP);
             LOG.debug(SERVICE_REDIS_TEXT+" EST DISPONIBLE");
         }
@@ -205,14 +203,14 @@ public class ParametreServiceBean implements ParametreService
         List<Parametre> params=new ArrayList<>();
         try
         {
-            Query query = new Query("*");
+            EQuery query = new EQuery("*");
             query.limit(0, 10000);
             query.setSortBy("code", true);
             params.addAll(redisClient.findByExpression(Parametre.class, query));
         }
         catch(Exception e) 
         {
-            ExceptionUtil.traiterException(e, ParametreService.SERVICE_CODE, true);
+            ExceptionUtil.traiterException(e, ParametreService.SERVICE_CODE, false);
         }
         return params;
     }
@@ -232,7 +230,7 @@ public class ParametreServiceBean implements ParametreService
         List<Parametre> params=new ArrayList<>();
         try
         {
-            Query query = new Query(RedisSearchQueryHelper.toStringAttribute("service",serviceId));
+            EQuery query = new EQuery(RedisSearchQueryHelper.toStringAttribute("service",serviceId));
             query.limit(0, 500);
             query.setSortBy("code", true);
             params.addAll(redisClient.findByExpression(Parametre.class, query));
@@ -267,7 +265,7 @@ public class ParametreServiceBean implements ParametreService
         try
         {
             List<Parametre> parametres = new ArrayList<>();
-            Query query = new Query(RedisSearchQueryHelper.toStringAttribute("code",code)+" "+
+            EQuery query = new EQuery(RedisSearchQueryHelper.toStringAttribute("code",code)+" "+
                     RedisSearchQueryHelper.toStringAttribute("service",serviceId));
             query.limit(0, 500);
             query.setSortBy("code", true);

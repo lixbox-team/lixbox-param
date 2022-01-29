@@ -21,7 +21,7 @@
  *   @AUTHOR Lixbox-team
  *
  ******************************************************************************/
-package fr.lixbox.service.param.provider;
+package fr.lixbox.service.param.ui.provider;
 
 import java.io.IOException;
 
