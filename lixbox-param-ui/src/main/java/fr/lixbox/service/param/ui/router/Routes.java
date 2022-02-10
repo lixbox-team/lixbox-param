@@ -51,7 +51,7 @@ public class Routes implements Serializable
     private static final long serialVersionUID = 202201281909L;
     private static final Log LOG = LogFactory.getLog(Routes.class);
     
-    @ConfigProperty(name="param.api.uri") String paramApi;
+    @ConfigProperty(name="param.api.uri") String paramApiUri;
     
 
     // ----------- Methodes -----------
@@ -60,7 +60,7 @@ public class Routes implements Serializable
     {
         String response = "";
         Map<String,String> config = new HashMap<>();
-        config.put("param.api.uri", paramApi);
+        config.put("paramApiUri", paramApiUri);
         response = JsonUtil.transformObjectToJson(config,false);
         
         rc.response()

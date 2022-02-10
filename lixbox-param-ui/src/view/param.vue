@@ -118,9 +118,8 @@ export default {
     async getConfiguration() {
       axios
         .get(process.env.VUE_APP_CONFIGURATION_URI)
-        .then(response => response.data)
-        .then(data => {
-          this.parametreServiceUri = data.param.api.uri;
+        .then(response => {
+          this.parametreServiceUri = response.data.paramApiUri;
           this.getParametres();
         })
         .catch(error =>{
