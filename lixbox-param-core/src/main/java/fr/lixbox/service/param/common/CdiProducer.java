@@ -23,6 +23,8 @@
  ******************************************************************************/
 package fr.lixbox.service.param.common;
 
+import java.util.Optional;
+
 import javax.enterprise.inject.Produces;
 
 import org.apache.commons.logging.Log;
@@ -49,6 +51,7 @@ public class CdiProducer
     private static final String DEFAULT_REGISTRY_URL = "http://localhost:18100/registry/api/1.0";    
 
     @ConfigProperty(name="registry.uri", defaultValue=DEFAULT_REGISTRY_URL) String registryUri;
+    @ConfigProperty(name="param.redis.uri") Optional<String> oRedisUri;
 
 
     
@@ -76,9 +79,12 @@ public class CdiProducer
     public ExtendRedisClient getExtendRedisClient() 
     {
         ExtendRedisClient result = null;
+        String redisUri="";
         try
         {
-            String redisUri = System.getProperty("param.redis.uri");
+            if (oRedisUri.isPresent()) {
+                redisUri = oRedisUri.get();
+            }
             if (StringUtil.isEmpty(redisUri)) 
             {
                 ServiceEntry redis = getRegistryServiceClient().discoverService(Constant.REDIS_NAME, Constant.REDIS_VERSION);
