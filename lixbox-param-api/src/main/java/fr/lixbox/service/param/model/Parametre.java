@@ -172,9 +172,9 @@ public class Parametre extends AbstractValidatedEntity implements RedisSearchDao
     @JsonIgnore
     @XmlTransient
     @Override
-    public Map<String, String> getIndexFieldValues()
+    public Map<String, Object> getIndexFieldValues()
     {
-        Map<String, String> indexFields = new HashMap<>();
+        Map<String, Object> indexFields = new HashMap<>();
         indexFields.put("code", RedisSearchValueSanitizer.sanitizeValue(code));
         indexFields.put("service", RedisSearchValueSanitizer.sanitizeValue(serviceId));
         return indexFields;

@@ -230,7 +230,7 @@ public class ParametreServiceBean implements ParametreService
         List<Parametre> params=new ArrayList<>();
         try
         {
-            EQuery query = new EQuery(RedisSearchQueryHelper.toStringAttribute("service",serviceId));
+            EQuery query = new EQuery(RedisSearchQueryHelper.toTextField("service",serviceId));
             query.limit(0, 500);
             query.setSortBy("code", true);
             params.addAll(redisClient.findByExpression(Parametre.class, query));
@@ -265,8 +265,8 @@ public class ParametreServiceBean implements ParametreService
         try
         {
             List<Parametre> parametres = new ArrayList<>();
-            EQuery query = new EQuery(RedisSearchQueryHelper.toStringAttribute("code",code)+" "+
-                    RedisSearchQueryHelper.toStringAttribute("service",serviceId));
+            EQuery query = new EQuery(RedisSearchQueryHelper.toTextField("code",code)+" "+
+                    RedisSearchQueryHelper.toTextField("service",serviceId));
             query.limit(0, 500);
             query.setSortBy("code", true);
             parametres.addAll(redisClient.findByExpression(Parametre.class, query));
